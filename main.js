@@ -154,3 +154,8 @@ answerButton.onclick = async () => {
     })
   })
 }
+
+// 4. Hangup call
+hangupButton.onclick = async () => {
+  pc.close()
+}
