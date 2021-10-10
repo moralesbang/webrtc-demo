@@ -138,8 +138,8 @@ answerButton.onclick = async () => {
   await pc.setLocalDescription(answerDescription)
 
   const answer = {
-    type: answerDescription.type,
-    sdp: answerDescription.sdp
+    sdp: answerDescription.sdp,
+    type: answerDescription.type
   }
 
   await callDoc.update({answer})
@@ -157,5 +157,14 @@ answerButton.onclick = async () => {
 
 // 4. Hangup call
 hangupButton.onclick = async () => {
+  console.log('Ending call')
   pc.close()
+
+  const videoTracks = remoteStream.getVideoTracks()
+  videoTracks.forEach(videoTrack => {
+    videoTrack.stop()
+    remoteStream.removeTrack(videoTrack)
+  })
+
+  remoteVideo.srcObject = null
 }
